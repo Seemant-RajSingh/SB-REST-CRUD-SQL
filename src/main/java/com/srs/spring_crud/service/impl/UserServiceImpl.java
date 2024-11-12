@@ -19,55 +19,57 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
+        // Check if user already exists by name or any other unique attribute
+        if (userRepository.existsByName(user.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with this name already exists.");
+        }
+
         userRepository.save(user);
     }
-
 
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
     }
 
-
     @Override
     public User getUser(Integer id) {
-        User user = userRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user Id:" + id));
-
-        return user;
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
     }
-
 
     @Override
     public void updateUser(Integer id, User user) {
-        userRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user Id:" + id));
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
 
-        user.setId(id);
+        // Set values to existing user
+        existingUser.setName(user.getName());
+        existingUser.setAge(user.getAge());
+        existingUser.setAddress(user.getAddress());
 
-        userRepository.save(user);
-
+        userRepository.save(existingUser);
     }
 
     @Override
     public void deleteUser(Integer id) {
-        User user = userRepository
-                .findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user Id:" + id));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
 
         userRepository.delete(user);
     }
 
     @Override
     public void updateName(Integer id, UserDto userDTO) {
-        User user = userRepository
-                .findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user Id:" + id));
+        // Retrieve the user by ID
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
 
-        // getName() in userDTO?
+        if (user.getName().equals(userDTO.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please enter a different name.");
+        }
         user.setName(userDTO.getName());
-
         userRepository.save(user);
-
     }
+
 }
