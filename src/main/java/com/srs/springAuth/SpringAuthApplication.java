@@ -1,13 +1,13 @@
-package com.srs.spring_crud;
+package com.srs.springAuth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringCrudApplication {
+public class SpringAuthApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringCrudApplication.class, args);
+		SpringApplication.run(SpringAuthApplication.class, args);
 	}
 
 }

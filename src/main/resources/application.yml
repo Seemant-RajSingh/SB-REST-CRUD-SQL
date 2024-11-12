@@ -1,0 +1,18 @@
+#spring.application.name=spring-crud
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/auth_db
+    password:
+  jpa:
+    hibernate:
+#   update table at start
+      ddl-auto: update
+#    show in console when queries are made
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
