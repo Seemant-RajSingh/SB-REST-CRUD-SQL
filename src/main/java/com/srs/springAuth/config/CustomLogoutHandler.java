@@ -24,6 +24,7 @@ public class CustomLogoutHandler implements LogoutHandler {
         String authHeader = request.getHeader("Authorization");
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+            // user already logged out
             return;
         }
 

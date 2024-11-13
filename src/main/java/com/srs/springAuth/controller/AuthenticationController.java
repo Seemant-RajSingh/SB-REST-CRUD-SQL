@@ -20,6 +20,7 @@ public class AuthenticationController {
     }
 
 
+    // works
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody User request
@@ -27,13 +28,16 @@ public class AuthenticationController {
         return ResponseEntity.ok(authService.register(request));
     }
 
+    // works
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(
+    public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody User request
     ) {
+        System.out.println("in controller login");
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
+    // works
     @PostMapping("/refresh_token")
     public ResponseEntity refreshToken(
             HttpServletRequest request,

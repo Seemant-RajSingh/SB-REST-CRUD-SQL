@@ -68,12 +68,14 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(User request) {
+        System.out.println("check 1");
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()
                 )
         );
+        System.out.println("check 2");
 
         User user = repository.findByUsername(request.getUsername()).orElseThrow();
         String accessToken = jwtService.generateAccessToken(user);
@@ -110,16 +112,22 @@ public class AuthenticationService {
             HttpServletRequest request,
             HttpServletResponse response) {
         // extract the token from authorization header
+        System.out.println("In refreshToken service func");
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-
+        System.out.println("authHeader: ");
+        System.out.println(authHeader);
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("rT check 1");
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
-
+        System.out.println("rT check 2");
         String token = authHeader.substring(7);
+
+        System.out.println("token: " + token);
 
         // extract username from token
         String username = jwtService.extractUsername(token);
+        System.out.println("username: " + username);
 
         // check if the user exist in database
         User user = repository.findByUsername(username)
