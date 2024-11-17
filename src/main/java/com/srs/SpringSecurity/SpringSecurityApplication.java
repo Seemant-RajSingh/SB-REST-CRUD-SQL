@@ -1,12 +1,13 @@
-package com.srs.springAuth;
+package com.srs.SpringSecurity;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringAuthApplication {
+public class SpringSecurityApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringAuthApplication.class, args);
+		SpringApplication.run(SpringSecurityApplication.class, args);
 	}
+
 }
